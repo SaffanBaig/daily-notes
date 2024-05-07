@@ -21,3 +21,29 @@ model User {
 
   @@map("user")
 }
+
+model NoteTimeSheet {
+  id          String @id @default(uuid())
+  dateCreated String @unique @map("date_created")
+  notes       Note[]
+
+  @@map("note_timsheets")
+}
+
+model Note {
+  id              String         @id @default(uuid())
+  NoteTimeSheet   NoteTimeSheet? @relation(fields: [noteTimeSheetId], references: [id])
+  noteTimeSheetId String?
+  text            String?
+  title           String         @default("Untitled")
+  tags            Tag[]
+
+  @@map("note")
+}
+
+model Tag {
+  id     String  @id @default(uuid())
+  Note   Note?   @relation(fields: [noteId], references: [id])
+  noteId String?
+  tag    String
+}
