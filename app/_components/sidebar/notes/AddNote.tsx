@@ -1,14 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { PlusIcon } from "lucide-react";
 import AddNoteButton from "./AddNoteButton";
-import { PrismaClient } from "@prisma/client";
 import { revalidatePath } from "next/cache";
+import { prisma } from "@/app/lib/prisma";
 
 const AddNote = async () => {
   const handleAddNote = async () => {
     "use server";
     console.log("Adding Note");
-    const prisma = new PrismaClient();
     let existingDate = await prisma.noteTimeSheet.findUnique({
       where: { dateCreated: new Date().toDateString() },
     });

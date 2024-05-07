@@ -9,7 +9,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
     <div className="h-screen">
       <Sidebar />
       <Navbar />
-      {children}
+      <div className="pl-[250px]">{children}</div>
     </div>
   );
 };

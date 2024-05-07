@@ -22,7 +22,6 @@ const NotesList = async () => {
     return noteTimeSheet;
   };
   const notes = await getCurrentDateNotes();
-  console.log("NOTES ", notes);
 
   return (
     <div>
