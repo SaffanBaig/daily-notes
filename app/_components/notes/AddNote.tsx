@@ -3,26 +3,32 @@ import { PlusIcon } from "lucide-react";
 import AddNoteButton from "./AddNoteButton";
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/app/lib/prisma";
+import { getCurrentUser } from "@/app/lib/session";
 
 const AddNote = async () => {
   const handleAddNote = async () => {
     "use server";
-    console.log("Adding Note");
+    const currentUser = await getCurrentUser();
+    if (!currentUser) return;
     let existingDate = await prisma.noteTimeSheet.findUnique({
-      where: { dateCreated: new Date().toDateString() },
+      where: {
+        dateCreated: new Date().toDateString(),
+        userId: currentUser?.id,
+      },
     });
     if (!existingDate) {
       existingDate = await prisma.noteTimeSheet.create({
         data: {
           dateCreated: new Date().toDateString(),
+          userId: currentUser?.id,
         },
       });
     }
 
-    const note = await prisma.note.create({
+    await prisma.note.create({
       data: {
         noteTimeSheetId: existingDate.id,
-        text: "",
+        text: "Untitled",
       },
     });
     revalidatePath("/dashboard");

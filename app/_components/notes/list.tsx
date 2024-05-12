@@ -1,6 +1,8 @@
+"use client";
 import { Note } from "@prisma/client";
 import { EllipsisVertical, Option, OptionIcon, Pencil } from "lucide-react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import React from "react";
 
 interface NotesListProps {
@@ -8,11 +10,13 @@ interface NotesListProps {
 }
 
 const List = ({ notes }: NotesListProps) => {
+  const searchParams = useSearchParams();
+  const date = searchParams.get("date");
   return (
     <div>
       {notes.map((note) => (
         <Link
-          href={{ pathname: "/dashboard", query: { noteId: note.id } }}
+          href={{ pathname: `/dashboard/${note.id}`, query: { date: date } }}
           className="h-10 w-full bg-white rounded-md flex px-4 items-center justify-between my-2"
           key={note.id}
         >
