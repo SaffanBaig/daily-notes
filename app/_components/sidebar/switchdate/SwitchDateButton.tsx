@@ -7,9 +7,7 @@ import { useEffect, useState } from "react";
 
 const SwitchDateButton = () => {
   const [currentDay, setCurrentDay] = useState<Date>(new Date());
-  const [selectedDate, setSelectedDate] = useState();
   const searchParams = useSearchParams();
-  const params = new URLSearchParams(searchParams);
   const pathname = usePathname();
   const router = useRouter();
 
@@ -18,7 +16,6 @@ const SwitchDateButton = () => {
   }, []);
 
   useEffect(() => {
-    console.log("CURRENT DAY ", currentDay);
     if (currentDay) {
       changeParams();
     }
@@ -34,8 +31,9 @@ const SwitchDateButton = () => {
 
   const changeParams = () => {
     const params = new URLSearchParams(searchParams);
+    params.delete("id");
     params.set("date", encodeURIComponent(currentDay.toDateString()));
-    router.replace(`${pathname}?${params.toString()}`);
+    router.push(`${pathname}?${params.toString()}`);
   };
 
   const handlePreviousDayClick = () => {

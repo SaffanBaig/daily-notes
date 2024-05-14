@@ -1,35 +1,29 @@
-"use client";
-import { Note } from "@prisma/client";
-import { Edit, Pencil } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import List from "./list";
 import { prisma } from "@/app/lib/prisma";
 import { getCurrentUser } from "@/app/lib/session";
-import { useSearchParams } from "next/navigation";
+import Item from "./item";
 
-const NotesList = () => {
-  const searchParams = useSearchParams();
-  const date = searchParams.get("date");
-  const [notes, setNotes] = useState<Note[]>([]);
-  const fetchNotes = async (date: string) => {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/notes?date=${date}`
-    );
-    const noteTimeSheet = await res.json();
-    if (noteTimeSheet && noteTimeSheet.notes.length > 0) {
-      setNotes(noteTimeSheet.notes);
-    }
-  };
-
-  useEffect(() => {
-    if (date) {
-      fetchNotes(date);
-    }
-  }, [date]);
+interface NotesListProps {
+  date: string;
+}
+const NotesList = async ({ date }: NotesListProps) => {
+  const currentUser = await getCurrentUser();
+  const noteTimeSheet = await prisma.noteTimeSheet.findFirst({
+    where: {
+      dateCreated: decodeURIComponent(date),
+      userId: currentUser?.id,
+    },
+    include: {
+      notes: true,
+    },
+  });
+  const notes = noteTimeSheet?.notes || [];
 
   return (
     <div>
-      <List notes={notes} />
+      {notes.map((note) => (
+        <Item key={note.id} note={note} />
+      ))}
     </div>
   );
 };

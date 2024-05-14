@@ -1,8 +1,6 @@
-import Editor from "../_components/editor";
-
 const Dashboard = () => {
   return (
-    <div className="px-[50px] pt-[50px]">
+    <div className="h-screen px-[50px] pt-[50px] bg-slate-100">
       <h1>Dashboard</h1>
     </div>
   );

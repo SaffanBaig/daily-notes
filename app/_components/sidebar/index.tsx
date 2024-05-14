@@ -1,19 +1,17 @@
-import { Note, PrismaClient } from "@prisma/client";
+// import { useSearchParams } from "next/navigation";
 import AddNote from "../notes/AddNote";
 import NotesList from "../notes/NotesList";
 import SwitchDate from "./switchdate";
 
-const Sidebar = async ({
-  searchParams,
-}: {
-  searchParams?: { date?: string };
-}) => {
-  console.log("SEARCH PARAMS ", searchParams);
+interface SidebarProps {
+  date: string | undefined;
+}
+const Sidebar = ({ date }: SidebarProps) => {
   return (
-    <div className="fixed h-full w-[250px] bg-blue-500 px-4 py-8 gap-4">
+    <div className="fixed h-full w-[250px] bg-slate-800 px-4 py-8 gap-4">
       <SwitchDate />
       <AddNote />
-      <NotesList />
+      {date && <NotesList date={date} />}
     </div>
   );
 };

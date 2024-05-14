@@ -2,13 +2,16 @@
 import { Button } from "@/components/ui/button";
 import { PlusIcon } from "lucide-react";
 import React from "react";
+import { useRouter } from "next/navigation";
+import { handleAddNoteAction } from "./serverAction/handleAddNoteAction";
 
-interface AddNoteProps {
-  handleAddNote: () => void;
-}
-const AddNoteButton = ({ handleAddNote }: AddNoteProps) => {
+const AddNoteButton = () => {
   return (
-    <Button className="w-full my-4" onClick={async () => await handleAddNote()}>
+    <Button
+      variant={"secondary"}
+      className="w-full my-4"
+      onClick={async () => await handleAddNoteAction()}
+    >
       <PlusIcon className="mr-2 h-4 w-4" /> Add Note
     </Button>
   );
