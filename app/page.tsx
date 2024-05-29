@@ -5,10 +5,9 @@ import Navbar from "./_components/navbar";
 import Editor from "./_components/editor";
 
 interface HomePageProps {
-  searchParams: { date: string; id: string } | undefined;
+  searchParams: { date?: string; id?: string } | undefined;
 }
 export default function Home({ searchParams }: HomePageProps) {
-  console.log(searchParams && searchParams.id);
   return (
     <div className="h-screen">
       <Sidebar date={searchParams?.date} />

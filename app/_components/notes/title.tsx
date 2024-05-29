@@ -1,7 +1,6 @@
 "use client";
 import { Input } from "@/components/ui/input";
-import { revalidateTag } from "next/cache";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { handleTitleUpdateAction } from "./serverAction/handleTitleUpdateAction";
 
 interface NoteTitleProps {
@@ -10,7 +9,12 @@ interface NoteTitleProps {
 }
 const NoteTitle = ({ title, id }: NoteTitleProps) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [text, setText] = useState(title);
+  const [text, setText] = useState<string>("");
+
+  useEffect(() => {
+    setText(title);
+  }, [id, title]);
+
   const handleEditClick = () => {
     setIsEditing(true);
   };

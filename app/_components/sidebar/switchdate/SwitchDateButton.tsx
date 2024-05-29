@@ -2,6 +2,7 @@
 import { isDateEqual } from "@/app/utils/compareDate";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { revalidatePath } from "next/cache";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -34,6 +35,7 @@ const SwitchDateButton = () => {
     params.delete("id");
     params.set("date", encodeURIComponent(currentDay.toDateString()));
     router.push(`${pathname}?${params.toString()}`);
+    router.refresh();
   };
 
   const handlePreviousDayClick = () => {

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { prisma } from "@/app/lib/prisma";
 import { getCurrentUser } from "@/app/lib/session";
 import Item from "./item";
+import { Note } from "@prisma/client";
 
 interface NotesListProps {
   date: string;
@@ -14,21 +15,21 @@ const NotesList = async ({ date }: NotesListProps) => {
       userId: currentUser?.id,
     },
   });
-  const notes = await prisma.note.findMany({
-    where: {
-      noteTimeSheetId: noteTimeSheet?.id,
-    },
-    orderBy: {
-      createdAt: "asc",
-    },
-  });
-  // const notes = noteTimeSheet?.notes || [];
+  let notes: Note[] = [];
+  if (noteTimeSheet) {
+    notes = await prisma.note.findMany({
+      where: {
+        noteTimeSheetId: noteTimeSheet?.id,
+      },
+      orderBy: {
+        createdAt: "asc",
+      },
+    });
+  }
 
   return (
     <div>
-      {notes.map((note) => (
-        <Item key={note.id} note={note} />
-      ))}
+      {notes && notes.map((note) => <Item key={note.id} note={note} />)}
     </div>
   );
 };

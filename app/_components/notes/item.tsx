@@ -18,16 +18,16 @@ interface ItemProps {
 
 const Item = ({ note }: ItemProps) => {
   const searchParams = useSearchParams();
-  const params = useParams();
   const router = useRouter();
   const pathName = usePathname();
 
   const [selectedNoteId, setSelectedNoteId] = useState<string>();
   useEffect(() => {
-    if (params?.id) {
-      setSelectedNoteId(params.id as string);
+    const id = searchParams.get("id");
+    if (id) {
+      setSelectedNoteId(id as string);
     }
-  }, [params]);
+  }, [searchParams]);
 
   const createQueryString = useCallback(
     (name: string, value: string) => {

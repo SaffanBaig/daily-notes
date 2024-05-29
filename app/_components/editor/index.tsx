@@ -40,7 +40,6 @@ const Editor = ({ id }: EditorProps) => {
     try {
       const response = await fetch("/api/notes/" + id);
       const note = await response.json();
-      console.log("RESPONSE ", note);
       setText(note.text);
       setNote(note);
     } catch (error) {
@@ -50,7 +49,6 @@ const Editor = ({ id }: EditorProps) => {
 
   useEffect(() => {
     if (id) {
-      console.log("ID ", id);
       fetchNote();
     }
   }, [id]);
