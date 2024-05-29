@@ -2,6 +2,7 @@
 import { Input } from "@/components/ui/input";
 import React, { useEffect, useState } from "react";
 import { handleTitleUpdateAction } from "./serverAction/handleTitleUpdateAction";
+import { Pencil } from "lucide-react";
 
 interface NoteTitleProps {
   title: string;
@@ -46,7 +47,10 @@ const NoteTitle = ({ title, id }: NoteTitleProps) => {
           onBlur={handleSubmit}
         />
       ) : (
-        text
+        <div className="flex gap-3 items-center">
+          {text}
+          <Pencil className="text-green-800" onClick={handleEditClick} />
+        </div>
       )}
     </h1>
   );

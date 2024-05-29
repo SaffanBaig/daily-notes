@@ -8,6 +8,7 @@ import {
 import { EllipsisVertical } from "lucide-react";
 import React from "react";
 import { handleDeleteNoteAction } from "./serverAction/handleDeleteNoteAction";
+import RenameTitleDialog from "../rename-dialog";
 
 interface DropdownProps {
   noteId: string;
@@ -24,7 +25,6 @@ const Dropdown = ({ noteId }: DropdownProps) => {
         >
           Delete
         </DropdownMenuItem>
-        <DropdownMenuItem>Rename</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
