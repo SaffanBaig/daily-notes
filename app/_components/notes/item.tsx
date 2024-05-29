@@ -10,6 +10,7 @@ import {
   useSearchParams,
 } from "next/navigation";
 import React, { useCallback, useEffect, useState } from "react";
+import Dropdown from "./dropdown";
 
 interface ItemProps {
   note: Note;
@@ -55,7 +56,7 @@ const Item = ({ note }: ItemProps) => {
         onClick={() => handleNoteSelect(note.id)}
       >
         <p className="">{note.title}</p>
-        <EllipsisVertical />
+        <Dropdown noteId={note.id} />
       </div>
     </div>
   );

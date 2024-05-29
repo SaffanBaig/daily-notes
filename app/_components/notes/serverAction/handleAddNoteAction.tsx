@@ -4,7 +4,6 @@ import { getCurrentUser } from "@/app/lib/session";
 import { revalidatePath } from "next/cache";
 
 export async function handleAddNoteAction() {
-  console.log("RAN ACTION");
   const currentUser = await getCurrentUser();
   if (!currentUser) return;
   let existingDate = await prisma.noteTimeSheet.findUnique({

@@ -1,4 +1,3 @@
-// import { useSearchParams } from "next/navigation";
 import AddNote from "../notes/AddNote";
 import NotesList from "../notes/NotesList";
 import SwitchDate from "./switchdate";

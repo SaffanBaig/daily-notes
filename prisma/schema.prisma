@@ -41,6 +41,7 @@ model Note {
   text            String?
   title           String         @default("Untitled")
   tags            Tag[]
+  createdAt       DateTime       @default(now())
 
   @@map("note")
 }

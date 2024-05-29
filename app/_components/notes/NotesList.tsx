@@ -13,11 +13,16 @@ const NotesList = async ({ date }: NotesListProps) => {
       dateCreated: decodeURIComponent(date),
       userId: currentUser?.id,
     },
-    include: {
-      notes: true,
+  });
+  const notes = await prisma.note.findMany({
+    where: {
+      noteTimeSheetId: noteTimeSheet?.id,
+    },
+    orderBy: {
+      createdAt: "asc",
     },
   });
-  const notes = noteTimeSheet?.notes || [];
+  // const notes = noteTimeSheet?.notes || [];
 
   return (
     <div>
