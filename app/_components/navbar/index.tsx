@@ -1,5 +1,4 @@
 import { UserButton } from "@clerk/nextjs";
-import SearchInput from "../search";
 
 const Navbar = () => {
   return (

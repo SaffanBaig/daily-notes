@@ -1,4 +1,4 @@
-import { prisma } from "@/app/lib/prisma"
+import prisma from "@/app/lib/prisma"
 import { getCurrentUser } from "@/app/lib/session"
 import { NextRequest, NextResponse } from "next/server"
 
