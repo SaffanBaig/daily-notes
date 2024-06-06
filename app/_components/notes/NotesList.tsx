@@ -1,8 +1,8 @@
 import React from "react";
-import { prisma } from "@/app/lib/prisma";
 import { getCurrentUser } from "@/app/lib/session";
 import Item from "./item";
 import { Note } from "@prisma/client";
+import prisma from "@/app/lib/prisma";
 
 interface NotesListProps {
   date: string;
