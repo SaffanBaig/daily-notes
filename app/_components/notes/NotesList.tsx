@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { prisma } from "@/app/lib/prisma";
 import { getCurrentUser } from "@/app/lib/session";
 import Item from "./item";
