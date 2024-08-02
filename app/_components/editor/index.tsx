@@ -8,18 +8,19 @@ import NoteTitle from "../notes/title";
 import { useDebounceValue } from "usehooks-ts";
 
 interface EditorProps {
-  id: string;
+  note: Note;
 }
-const Editor = ({ id }: EditorProps) => {
+const Editor = ({ note: { id, text, title } }: EditorProps) => {
+  console.log("EDITOR", id, text, title);
   // Dynamic import react quill as it uses browser api (ex: document)
   const ReactQuill = useMemo(
     () => dynamic(() => import("react-quill"), { ssr: false }),
     []
   );
 
-  const [text, setText] = useState("");
-  const [debouncedText] = useDebounceValue(text, 500);
-  const [note, setNote] = useState<Note>();
+  const [content, setContent] = useState("");
+  const [debouncedText] = useDebounceValue(content, 500);
+  // const [note, setNote] = useState<Note>();
 
   const updateNote = async () => {
     await fetch(
@@ -36,26 +37,15 @@ const Editor = ({ id }: EditorProps) => {
     }
   }, [debouncedText]);
 
-  const fetchNote = async () => {
-    try {
-      const response = await fetch("/api/notes/" + id);
-      const note = await response.json();
-      setText(note.text);
-      setNote(note);
-    } catch (error) {
-      console.error("Error fetching note:", error);
-    }
-  };
-
   useEffect(() => {
-    if (id) {
-      fetchNote();
+    if (text) {
+      setContent(text);
     }
   }, [id]);
 
   return (
-    <div className="h-full w-full px-4 py-4">
-      {note && <NoteTitle title={note.title} id={id} />}
+    <div className="pl-72 h-full w-full px-4 py-4">
+      <NoteTitle title={title} id={id} />
       <ReactQuill
         className="h-[500px]"
         theme="snow"
@@ -73,8 +63,8 @@ const Editor = ({ id }: EditorProps) => {
             ["clean"],
           ],
         }}
-        value={text}
-        onChange={setText}
+        value={content}
+        onChange={setContent}
       />
     </div>
   );

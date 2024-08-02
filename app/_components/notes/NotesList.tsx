@@ -4,28 +4,17 @@ import Item from "./item";
 import { Note } from "@prisma/client";
 import prisma from "@/app/lib/prisma";
 
-interface NotesListProps {
-  date: string;
-}
-const NotesList = async ({ date }: NotesListProps) => {
+const NotesList = async () => {
   const currentUser = await getCurrentUser();
-  const noteTimeSheet = await prisma.noteTimeSheet.findFirst({
+
+  const notes: Note[] = await prisma.note.findMany({
     where: {
-      dateCreated: decodeURIComponent(date),
       userId: currentUser?.id,
     },
+    orderBy: {
+      createdAt: "desc",
+    },
   });
-  let notes: Note[] = [];
-  if (noteTimeSheet) {
-    notes = await prisma.note.findMany({
-      where: {
-        noteTimeSheetId: noteTimeSheet?.id,
-      },
-      orderBy: {
-        createdAt: "asc",
-      },
-    });
-  }
 
   return (
     <div>

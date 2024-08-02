@@ -14,34 +14,24 @@ datasource db {
 }
 
 model User {
-  id             String          @id @default(uuid())
-  email          String          @unique
-  createdAt      DateTime        @default(now()) @map("created_at")
-  updatedAt      DateTime        @updatedAt @map("updated_at")
-  clerkId        String?         @unique @map("clerk_id")
-  noteTimesheets NoteTimeSheet[]
+  id        String   @id @default(uuid())
+  email     String   @unique
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  clerkId   String?  @unique @map("clerk_id")
+  notes     Note[]
 
   @@map("user")
 }
 
-model NoteTimeSheet {
-  id          String @id @default(uuid())
-  dateCreated String @unique @map("date_created")
-  notes       Note[]
-  user        User   @relation(fields: [userId], references: [id])
-  userId      String
-
-  @@map("note_timsheets")
-}
-
 model Note {
-  id              String         @id @default(uuid())
-  NoteTimeSheet   NoteTimeSheet? @relation(fields: [noteTimeSheetId], references: [id])
-  noteTimeSheetId String?
-  text            String?
-  title           String         @default("Untitled")
-  tags            Tag[]
-  createdAt       DateTime       @default(now())
+  id        String   @id @default(uuid())
+  text      String?
+  title     String   @default("Untitled")
+  tags      Tag[]
+  createdAt DateTime @default(now())
+  User      User?    @relation(fields: [userId], references: [id])
+  userId    String?
 
   @@map("note")
 }

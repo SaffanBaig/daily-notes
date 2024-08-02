@@ -17,37 +17,19 @@ interface ItemProps {
 }
 
 const Item = ({ note }: ItemProps) => {
-  const searchParams = useSearchParams();
   const router = useRouter();
-  const pathName = usePathname();
 
   const [selectedNoteId, setSelectedNoteId] = useState<string>();
-  useEffect(() => {
-    const id = searchParams.get("id");
-    if (id) {
-      setSelectedNoteId(id as string);
-    }
-  }, [searchParams]);
-
-  const createQueryString = useCallback(
-    (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams.toString());
-      params.set(name, value);
-
-      return params.toString();
-    },
-    [searchParams]
-  );
 
   const handleNoteSelect = (id: string) => {
-    router.push(pathName + "?" + createQueryString("id", id));
+    router.push(`/${id}`);
     // router.refresh();
   };
   return (
     <div>
       <div
         className={cn(
-          "h-10 w-full bg-white rounded-md flex px-4 items-center justify-between my-2",
+          "h-10 w-full bg-white rounded-md flex px-4 items-center justify-between my-2 cursor-pointer",
           {
             "bg-blue-500 text-white": selectedNoteId === note.id,
           }
