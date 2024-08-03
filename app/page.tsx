@@ -1,9 +1,8 @@
-import Image from "next/image";
 import { redirect } from "next/navigation";
-import Sidebar from "./_components/sidebar";
-import Navbar from "./_components/navbar";
-import Editor from "./_components/editor";
+import { getCurrentUser } from "./lib/session";
 
-export default function Home() {
+export default async function Home() {
+  const user = await getCurrentUser();
+  if (user) redirect("/note");
   return <div></div>;
 }

@@ -1,8 +1,10 @@
+export const dynamic = "force-dynamic";
 import React from "react";
-import Editor from "../_components/editor";
-import prisma from "../lib/prisma";
-import { getCurrentUser } from "../lib/session";
+
 import { Note } from "@prisma/client";
+import { getCurrentUser } from "@/app/lib/session";
+import prisma from "@/app/lib/prisma";
+import Editor from "@/app/_components/editor";
 
 const NotePage = async ({ params }: { params: { id: string } }) => {
   if (!params?.id) {

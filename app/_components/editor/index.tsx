@@ -23,13 +23,15 @@ const Editor = ({ note: { id, text, title } }: EditorProps) => {
   // const [note, setNote] = useState<Note>();
 
   const updateNote = async () => {
-    await fetch(
+    console.log("UPDATE NOTE ", debouncedText);
+    const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/notes/${id}/text`,
       {
         method: "PUT",
         body: JSON.stringify({ text: debouncedText }),
       }
     );
+    console.log("CIM ", res);
   };
   useEffect(() => {
     if (debouncedText) {

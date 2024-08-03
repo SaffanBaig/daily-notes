@@ -22,7 +22,8 @@ const Item = ({ note }: ItemProps) => {
   const [selectedNoteId, setSelectedNoteId] = useState<string>();
 
   const handleNoteSelect = (id: string) => {
-    router.push(`/${id}`);
+    // setSelectedNoteId(id);
+    router.push(`/note/${id}`);
     // router.refresh();
   };
   return (
