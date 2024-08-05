@@ -18,10 +18,19 @@ interface ItemProps {
 
 const Item = ({ note }: ItemProps) => {
   const router = useRouter();
-
+  const params = useParams();
   const [selectedNoteId, setSelectedNoteId] = useState<string>();
 
+  useEffect(() => {
+    if (params.id) {
+      setSelectedNoteId(params.id.toString());
+    }
+  }, [params.id]);
+
   const handleNoteSelect = (id: string) => {
+    if (params.id == id) {
+      setSelectedNoteId(id);
+    }
     // setSelectedNoteId(id);
     router.push(`/note/${id}`);
     // router.refresh();
